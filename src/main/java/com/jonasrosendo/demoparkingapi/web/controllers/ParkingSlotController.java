@@ -1,12 +1,11 @@
 package com.jonasrosendo.demoparkingapi.web.controllers;
 
-import com.jonasrosendo.demoparkingapi.entities.ParkingLot;
+import com.jonasrosendo.demoparkingapi.entities.ParkingSlot;
 import com.jonasrosendo.demoparkingapi.exceptions.ErrorMessage;
-import com.jonasrosendo.demoparkingapi.services.ParkingLotService;
-import com.jonasrosendo.demoparkingapi.web.dtos.parking_lot.ParkingLotCreateDTO;
+import com.jonasrosendo.demoparkingapi.services.ParkingSlotService;
+import com.jonasrosendo.demoparkingapi.web.dtos.parking_lot.ParkingSlotCreateDTO;
 import com.jonasrosendo.demoparkingapi.web.mappers.ParkingLotMapper;
-import com.jonasrosendo.demoparkingapi.web.vos.customer.CustomerResponseVO;
-import com.jonasrosendo.demoparkingapi.web.vos.parking_lot.ParkingLotResponseVO;
+import com.jonasrosendo.demoparkingapi.web.vos.parking_lot.ParkingSlotResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,27 +23,27 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-@Tag(name = "Parking lots", description = "All operations related to parking lots")
+@Tag(name = "Parking slots", description = "All operations related to parking slots")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/parking-lots")
-public class ParkingLotController {
+@RequestMapping("api/v1/parking-slots")
+public class ParkingSlotController {
 
-    private final ParkingLotService parkingLotService;
+    private final ParkingSlotService parkingSlotService;
 
     @Operation(
-            summary = "Create a new parking lot",
-            description = "Operation to create a new parking lot",
+            summary = "Create a new parking slot",
+            description = "Operation to create a new parking slot",
             security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(
                             responseCode = "201",
                             description = "Success",
-                            headers = @Header(name = HttpHeaders.LOCATION, description = "URL to find the created parking lot")
+                            headers = @Header(name = HttpHeaders.LOCATION, description = "URL to find the created parking slot")
                     ),
                     @ApiResponse(
                             responseCode = "409",
-                            description = "Parking lot already registered",
+                            description = "Parking slot already registered",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class
@@ -62,7 +61,7 @@ public class ParkingLotController {
                     ),
                     @ApiResponse(
                             responseCode = "403",
-                            description = "Not permitted to customers create new parking lots",
+                            description = "Not permitted to customers create new parking slots",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class
@@ -73,9 +72,9 @@ public class ParkingLotController {
     )
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> create(@RequestBody @Valid ParkingLotCreateDTO parkingLotCreateDTO) {
-        ParkingLot parkingLot = ParkingLotMapper.toParkingLot(parkingLotCreateDTO);
-        parkingLotService.save(parkingLot);
+    public ResponseEntity<Void> create(@RequestBody @Valid ParkingSlotCreateDTO parkingSlotCreateDTO) {
+        ParkingSlot parkingLot = ParkingLotMapper.toParkingSlot(parkingSlotCreateDTO);
+        parkingSlotService.save(parkingLot);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequestUri()
@@ -86,7 +85,7 @@ public class ParkingLotController {
     }
 
     @Operation(
-            summary = "Find lot by code",
+            summary = "Find slot by code",
             description = "Operation to get a lot from database through code",
             security = @SecurityRequirement(name = "security"),
             responses = {
@@ -95,7 +94,7 @@ public class ParkingLotController {
                             description = "Success",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ParkingLotResponseVO.class)
+                                    schema = @Schema(implementation = ParkingSlotResponseVO.class)
                             )
                     ),
                     @ApiResponse(
@@ -108,7 +107,7 @@ public class ParkingLotController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Lot not found",
+                            description = "Slot not found",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class
@@ -119,8 +118,8 @@ public class ParkingLotController {
     )
     @GetMapping("/{code}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ParkingLotResponseVO> getByCode(@PathVariable String code) {
-        ParkingLot parkingLot = parkingLotService.findByCode(code);
-        return ResponseEntity.ok(ParkingLotMapper.toParkingLotResponseVO(parkingLot));
+    public ResponseEntity<ParkingSlotResponseVO> getByCode(@PathVariable String code) {
+        ParkingSlot parkingLot = parkingSlotService.findByCode(code);
+        return ResponseEntity.ok(ParkingLotMapper.toParkingSlotResponseVO(parkingLot));
     }
 }

@@ -1,9 +1,9 @@
 package com.jonasrosendo.demoparkingapi.services;
 
-import com.jonasrosendo.demoparkingapi.entities.ParkingLot;
+import com.jonasrosendo.demoparkingapi.entities.ParkingSlot;
 import com.jonasrosendo.demoparkingapi.exceptions.EntityNotFoundException;
 import com.jonasrosendo.demoparkingapi.exceptions.ParkingLotCodeUniqueViolationException;
-import com.jonasrosendo.demoparkingapi.repositories.ParkingLotRepository;
+import com.jonasrosendo.demoparkingapi.repositories.ParkingSlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ParkingLotService {
+public class ParkingSlotService {
 
-    private final ParkingLotRepository parkingLotRepository;
+    private final ParkingSlotRepository slotRepository;
 
     @Transactional
-    public ParkingLot save(ParkingLot parkingLot) {
+    public ParkingSlot save(ParkingSlot parkingSlot) {
         try {
-            return parkingLotRepository.save(parkingLot);
+            return slotRepository.save(parkingSlot);
         } catch (DataIntegrityViolationException e) {
-            throw new ParkingLotCodeUniqueViolationException(String.format("Lot code=%s already registered", parkingLot.getCode()));
+            throw new ParkingLotCodeUniqueViolationException(String.format("Lot code=%s already registered", parkingSlot.getCode()));
         }
     }
 
     @Transactional(readOnly = true)
-    public ParkingLot findByCode(String code) {
-        return parkingLotRepository.findByCode(code).orElseThrow(
+    public ParkingSlot findByCode(String code) {
+        return slotRepository.findByCode(code).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Lot code=%s not found", code))
         );
     }

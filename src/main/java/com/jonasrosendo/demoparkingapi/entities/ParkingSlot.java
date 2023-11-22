@@ -17,9 +17,9 @@ import java.util.Objects;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "parking_lots")
+@Table(name = "parking_slots")
 @EntityListeners(AuditingEntityListener.class)
-public class ParkingLot implements Serializable {
+public class ParkingSlot implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class ParkingLot implements Serializable {
 
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private LotStatus status;
+    private SlotStatus status;
 
     @Column(name = "creation_date")
     @CreatedDate
@@ -52,7 +52,7 @@ public class ParkingLot implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ParkingLot parkingLot = (ParkingLot) o;
+        ParkingSlot parkingLot = (ParkingSlot) o;
         return Objects.equals(id, parkingLot.id);
     }
 
@@ -61,7 +61,7 @@ public class ParkingLot implements Serializable {
         return Objects.hash(id);
     }
 
-    public enum LotStatus {
+    public enum SlotStatus {
         AVAILABLE,
         UNAVAILABLE
     }

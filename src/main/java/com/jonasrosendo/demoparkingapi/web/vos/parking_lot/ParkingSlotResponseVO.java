@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParkingLotResponseVO {
+public class ParkingSlotResponseVO {
     private Long id;
     private String code;
     private String status;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class ParkingLotCreateDTO {
+public class ParkingSlotCreateDTO {
 
     @NotBlank
     @Size(min = 4, max = 4)
