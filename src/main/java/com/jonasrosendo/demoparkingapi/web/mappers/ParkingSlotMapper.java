@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ParkingLotMapper {
+public class ParkingSlotMapper {
 
     public static ParkingSlot toParkingSlot(ParkingSlotCreateDTO parkingSlotCreateDTO) {
         return new ModelMapper().map(parkingSlotCreateDTO, ParkingSlot.class);

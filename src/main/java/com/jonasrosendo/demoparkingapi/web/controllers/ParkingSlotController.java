@@ -4,7 +4,7 @@ import com.jonasrosendo.demoparkingapi.entities.ParkingSlot;
 import com.jonasrosendo.demoparkingapi.exceptions.ErrorMessage;
 import com.jonasrosendo.demoparkingapi.services.ParkingSlotService;
 import com.jonasrosendo.demoparkingapi.web.dtos.parking_lot.ParkingSlotCreateDTO;
-import com.jonasrosendo.demoparkingapi.web.mappers.ParkingLotMapper;
+import com.jonasrosendo.demoparkingapi.web.mappers.ParkingSlotMapper;
 import com.jonasrosendo.demoparkingapi.web.vos.parking_lot.ParkingSlotResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -73,7 +73,7 @@ public class ParkingSlotController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> create(@RequestBody @Valid ParkingSlotCreateDTO parkingSlotCreateDTO) {
-        ParkingSlot parkingLot = ParkingLotMapper.toParkingSlot(parkingSlotCreateDTO);
+        ParkingSlot parkingLot = ParkingSlotMapper.toParkingSlot(parkingSlotCreateDTO);
         parkingSlotService.save(parkingLot);
 
         URI location = ServletUriComponentsBuilder
@@ -120,6 +120,6 @@ public class ParkingSlotController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ParkingSlotResponseVO> getByCode(@PathVariable String code) {
         ParkingSlot parkingLot = parkingSlotService.findByCode(code);
-        return ResponseEntity.ok(ParkingLotMapper.toParkingSlotResponseVO(parkingLot));
+        return ResponseEntity.ok(ParkingSlotMapper.toParkingSlotResponseVO(parkingLot));
     }
 }

@@ -30,4 +30,11 @@ public class ParkingSlotService {
                 () -> new EntityNotFoundException(String.format("Lot code=%s not found", code))
         );
     }
+
+    @Transactional(readOnly = true)
+    public ParkingSlot findAvailableSlot() {
+        return slotRepository.findFirstByStatus(ParkingSlot.SlotStatus.AVAILABLE).orElseThrow(
+                () -> new EntityNotFoundException("No Available slots")
+        );
+    }
 }
